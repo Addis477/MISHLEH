@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1410">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/icon-512.png">
+    <title>MISHLEH · House of Wisdom</title>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-placeholder-for-your-real-key",
+            authDomain: "mishleh-app.firebaseapp.com",
+            projectId: "mishleh-app",
+            storageBucket: "mishleh-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abc123"
+        };
+        
+        window.firebaseApp = initializeApp(firebaseConfig);
+        window.firebaseAuth = getAuth(window.firebaseApp);
+        window.firebaseDb = getFirestore(window.firebaseApp);
+    </script>
+</head>
+<body>
+    <div id="app-root" class="app-container">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen active">
+            <div class="courtyard" style="text-align: center; padding: 60px 20px;">
+                <div style="font-size: 64px; margin-bottom: 24px;">🕯️</div>
+                <h1>MISHLEH</h1>
+                <div class="subtitle">The House of Wisdom</div>
+                <div style="margin-top: 48px;">
+                    <div class="loading-spinner"></div>
+                    <p style="color: var(--sand); margin-top: 16px;">Preparing your sacred space...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen">
+            <div class="courtyard">
+                <h1>MISHLEH</h1>
+                <div class="subtitle">Enter the House of Wisdom</div>
+                
+                <div style="text-align: center; margin: 32px 0; font-size: 48px;">🌳</div>
+                
+                <div id="auth-forms">
+                    <!-- Login Form -->
+                    <form id="login-form" onsubmit="return false;">
+                        <input type="email" id="login-email" placeholder="Email" class="auth-input" required>
+                        <input type="password" id="login-password" placeholder="Password" class="auth-input" required>
+                        <button type="submit" class="btn" onclick="window.handleLogin()">ENTER THE HOUSE</button>
+                    </form>
+                    
+                    <div style="margin: 20px 0; text-align: center;">
+                        <span style="color: var(--sand);">——  or  ——</span>
+                    </div>
+                    
+                    <!-- Signup Form -->
+                    <form id="signup-form" onsubmit="return false;">
+                        <input type="text" id="signup-name" placeholder="Your Name" class="auth-input" required>
+                        <input type="email" id="signup-email" placeholder="Email" class="auth-input" required>
+                        <input type="password" id="signup-password" placeholder="Password (min 6 characters)" class="auth-input" required>
+                        <button type="submit" class="btn btn-outline" onclick="window.handleSignup()">BEGIN YOUR JOURNEY</button>
+                    </form>
+                </div>
+                
+                <div class="footer-quote">
+                    "The fear of the Lord is the beginning of wisdom."<br>— Proverbs 9:10
+                </div>
+                
+                <p style="color: var(--sand); font-size: 12px; text-align: center; margin-top: 24px;">
+                    By entering, you agree to walk this sacred path.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Courtyard Screen -->
+        <div id="courtyard-screen" class="screen">
+            <div class="courtyard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <span style="color: var(--gold);" id="user-greeting"></span>
+                    <button class="btn-small btn-outline" onclick="window.logout()" style="width: auto;">Leave House</button>
+                </div>
+                
+                <h1>MISHLEH</h1>
+                <div class="subtitle">The House of Wisdom</div>
+                
+                <div style="text-align: center; margin: 20px 0; font-size: 48px;">🌳</div>
+                
+                <div class="door" onclick="window.navigateTo('upper-room')">
+                    <div class="door-icon">🕯️</div>
+                    <div class="door-title">THE UPPER ROOM</div>
+                    <div class="door-desc">For the soul who needs rest and formation</div>
+                    <div id="upper-room-progress" style="font-size: 12px; color: var(--gold); margin-top: 8px;"></div>
+                </div>
+                
+                <div class="door" id="workshop-door" onclick="window.navigateTo('workshop')">
+                    <div class="door-icon">🔨</div>
+                    <div class="door-title">THE WORKSHOP</div>
+                    <div class="door-desc">For the calling who is ready to build</div>
+                    <div id="workshop-status" style="font-size: 12px; color: var(--gold); margin-top: 8px;"></div>
+                </div>
+                
+                <div class="door" onclick="window.navigateTo('scriptorium')">
+                    <div class="door-icon">📜</div>
+                    <div class="door-title">THE SCRIPTORIUM</div>
+                    <div class="door-desc">Your sacred archive · Journal · Progress</div>
+                </div>
+                
+                <div class="door" onclick="window.navigateTo('prayer-wall')">
+                    <div class="door-icon">🙏</div>
+                    <div class="door-title">THE PRAYER WALL</div>
+                    <div class="door-desc">Pray with the community</div>
+                </div>
+                
+                <div class="footer-quote" id="daily-verse"></div>
+            </div>
+        </div>
+        
+        <!-- Other screens dynamically injected by app.js -->
+        <div id="dynamic-screens"></div>
+    </div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
+    
+    <!-- App Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/journal.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
