@@ -1,0 +1,464 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cedar: #5c3a2e;
+    --sand: #c4a882;
+    --olive: #4a5d3e;
+    --gold: #b89b5e;
+    --parchment: #f0e6d2;
+    --stone: #2a2420;
+    --candle: #d4a44a;
+    --deep: #1a1410;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Times New Roman', serif;
+    background: var(--deep);
+    color: #e8e0d5;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 16px 12px;
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Cards */
+.courtyard, .room, .journey-card, .lesson-card, .scriptorium, .workshop-card, .prayer-card {
+    background: var(--stone);
+    border: 1px solid var(--gold);
+    border-radius: 24px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.3);
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-align: center;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-family: 'Times New Roman', serif;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--parchment);
+    margin-bottom: 16px;
+    font-family: 'Times New Roman', serif;
+    border-bottom: 1px solid var(--cedar);
+    padding-bottom: 12px;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--sand);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--sand);
+    font-style: italic;
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+/* Doors */
+.door {
+    background: var(--cedar);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 20px 16px;
+    margin-bottom: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #3a2218;
+}
+
+.door:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #3a2218;
+}
+
+.door-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.door-title {
+    font-size: 20px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.door-desc {
+    font-size: 14px;
+    color: var(--parchment);
+    opacity: 0.8;
+}
+
+.door-locked {
+    opacity: 0.6;
+}
+
+/* Buttons */
+.btn {
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    padding: 14px 24px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #7a653a;
+    border: 1px solid #d4b87a;
+}
+
+.btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #7a653a;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    padding: 12px 20px;
+}
+
+.btn-outline:active {
+    background: rgba(184, 155, 94, 0.1);
+    transform: translateY(2px);
+}
+
+.btn-small {
+    padding: 10px 16px;
+    font-size: 14px;
+    width: auto;
+    display: inline-block;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Auth Inputs */
+.auth-input {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--cedar);
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--parchment);
+    font-size: 16px;
+    margin-bottom: 16px;
+    font-family: inherit;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+/* Progress Stones */
+.progress-container {
+    margin: 20px 0;
+}
+
+.progress-week {
+    margin-bottom: 16px;
+}
+
+.progress-label {
+    font-size: 14px;
+    color: var(--sand);
+    margin-bottom: 8px;
+}
+
+.progress-stones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.stone {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cedar);
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--parchment);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stone.completed {
+    background: var(--gold);
+    color: var(--deep);
+    font-weight: bold;
+}
+
+.stone.current {
+    border: 3px solid var(--candle);
+    box-shadow: 0 0 12px var(--candle);
+}
+
+.stone.locked {
+    opacity: 0.4;
+    border-color: var(--sand);
+    cursor: not-allowed;
+}
+
+/* Scripture Box */
+.scripture-box {
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--cedar);
+}
+
+.scripture-text {
+    font-size: 16px;
+    color: var(--parchment);
+    font-style: italic;
+}
+
+.scripture-ref {
+    margin-top: 8px;
+    color: var(--gold);
+    font-size: 14px;
+}
+
+/* Timer */
+.stillness-timer {
+    background: var(--deep);
+    border: 2px solid var(--candle);
+    border-radius: 60px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.timer-display {
+    font-size: 48px;
+    color: var(--candle);
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+.timer-presets {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.timer-preset {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.timer-preset.active {
+    background: var(--gold);
+    color: var(--deep);
+}
+
+/* Journal */
+.journal-input {
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--cedar);
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--parchment);
+    font-size: 16px;
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+.journal-input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+/* Checkbox */
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    accent-color: var(--gold);
+}
+
+/* Section */
+.section-block {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cedar);
+}
+
+.section-title {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Navigation */
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.back-link {
+    color: var(--sand);
+}
+
+/* Prayer Wall */
+.prayer-request {
+    background: rgba(92, 58, 46, 0.3);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--gold);
+}
+
+.prayer-author {
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.prayer-content {
+    color: var(--parchment);
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.prayer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--sand);
+}
+
+.prayer-amen {
+    color: var(--candle);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.prayer-amen.amen-given {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--cedar);
+    border-top: 3px solid var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer-quote {
+    text-align: center;
+    color: var(--sand);
+    font-size: 14px;
+    margin-top: 24px;
+    font-style: italic;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--stone);
+    border: 1px solid var(--gold);
+    color: var(--parchment);
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 14px;
+    z-index: 1000;
+    animation: fadeInOut 3s ease;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    body { padding: 12px 8px; }
+    h1 { font-size: 28px; }
+}
